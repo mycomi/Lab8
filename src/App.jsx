@@ -75,6 +75,7 @@ export default class App extends Component {
   loadFirebase = () => {
       firebase.firestore()
         .collection('transactions')
+        .orderBy("date", "desc")
         .onSnapshot(items => {
           const transaction = []
           items.forEach( res =>{
