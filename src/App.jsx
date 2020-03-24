@@ -163,7 +163,7 @@ export default class App extends Component {
       <div className="container mt-4 mb-5">
         <Header />
 
-        <Route exact path="/" render={ props => (
+        <Route exact path="/Lab8/" render={ props => (
           <div>
           <AddTransaction addTransaction={this.addTransaction} />
           <Balance transactions={this.state.transactions}/>
