@@ -11,7 +11,7 @@ export default function About() {
             <h5 className="card-title">Developer information</h5>
             <p>Rachata Jaraja (610610607)</p>
             <p>This app use Google Firebase as backend.</p>
-            <Link to="/">
+            <Link to="/Lab8/">
               <h3>
                 <button type="button" className="btn btn-primary">Home</button>
               </h3>
