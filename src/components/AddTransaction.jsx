@@ -37,6 +37,7 @@ export default class AddTransaction extends Component {
             <input 
               type="number" 
               name="amount" 
+              step="1"
               className="form-control" 
               placeholder="0.00"
               onChange={this.onChange} 

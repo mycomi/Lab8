@@ -5,7 +5,7 @@ export default class Transaction extends Component {
     const monthNames = ["Jan","Feb","Mar","Apr","May","Jun",
                       "Jul","Aug","Sep","Oct","Nov","Dec"];
     const { name,amount,date } = this.props.transaction;
-    const t_date = new Date(date);
+    const t_date = new Date();
     const date_str = t_date.getDate()+' '+monthNames[t_date.getMonth()]+' '+(t_date.getYear()+1900);
 
     return (  

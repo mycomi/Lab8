@@ -9,6 +9,9 @@ import Balance from './components/Balance';
 import IncomeExpense from './components/IncomeExpense';
 import TransactionTable from './components/TransactionTable';
 import About from './components/About';
+import firebase from './firebase/firebase'
+
+
 
 import './App.css';
 
@@ -55,14 +58,33 @@ export default class App extends Component {
       .then( res => {
         const data = res.data;
         this.setState( { transactions: data } );
+
       });
+    
   }
 
+
   componentDidMount() {
-    // this.loadData();   // load data from variable
-    this.loadJsonData();  // load data from JSON file on server
-    // this.loadFirebase(); // load data from Firebase
+     //this.loadData();   // load data from variable
+    // this.loadJsonData();  // load data from JSON file on server
+    this.loadFirebase(); // load data from Firebase
+    
   }
+
+
+  loadFirebase = () => {
+      firebase.firestore()
+        .collection('transactions')
+        .onSnapshot(items => {
+          const transaction = []
+          items.forEach( res =>{
+          transaction.push(res.data())
+          })
+          this.setState({transactions:transaction})
+        })
+
+  }
+
 
   validateForm = (name,amount) => {
     if (!name || !amount) {
@@ -73,6 +95,9 @@ export default class App extends Component {
       return false;
     } else if (+amount === 0) {
       window.alert('Amount CANNOT be zero!');
+      return false;
+    }else if(!Number.isInteger(+amount)){
+      window.alert('Please fill only Integer Number');
       return false;
     }
   
@@ -85,23 +110,52 @@ export default class App extends Component {
       return false;
     }
 
-    const newTransaction = {
-      id: v4(),
-      name,
-      amount: +amount,
-      date: new Date()
-    }
+    // const newTransaction = {
+    //   id: v4(),
+    //   name,
+    //   amount: +amount,
+    //   date: new Date()
+    // }
 
-    this.state.transactions.unshift(newTransaction);
-    this.setState( { transactions: this.state.transactions } );
+    
+     
+    firebase.firestore()
+      .collection('transactions')
+      .add({
+        id: v4(),
+        name,
+        amount: +amount,
+        date: new Date()
+        
+      })
+
+
+      // this.state.transactions.unshift(newTransaction);
+      this.setState( { transactions: this.state.transactions } );
+
+    
   }
 
   clearTransactions = () => {
-    let ans = window.confirm("You are going to clear all transaction history!!!")
-    if (ans) {
-      this.setState( { transactions: [] } );
-    }
+    // let ans = 
+    window.confirm("You are going to clear all transaction history!!!")
+    // if (ans) {
+    //   this.setState( { transactions: [] } );
+    // }
+
+    firebase.firestore()
+      .collection('transactions')
+      .get()
+      .then(function(Snapshot){
+      Snapshot.forEach(function(doc){
+        doc.ref.delete()
+      })
+    })
+    this.setState( { transactions: [] } );
+
   }
+
+  
 
   render() {
     return (

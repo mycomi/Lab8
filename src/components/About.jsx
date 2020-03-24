@@ -6,10 +6,10 @@ export default function About() {
     <div>
       <div className="container mt-5">
         <div className="card">
-          <img src={process.env.PUBLIC_URL+'/andreas-klassen.jpg'} className='card-img-top' alt="..." />
+          <img src={process.env.PUBLIC_URL+'/me.jpg'} className='card-img-top' alt="..." />
           <div className="card-body">
             <h5 className="card-title">Developer information</h5>
-            <p>Dome Potikanond (610610999)</p>
+            <p>Rachata Jaraja (610610607)</p>
             <p>This app use Google Firebase as backend.</p>
             <Link to="/">
               <h3>
